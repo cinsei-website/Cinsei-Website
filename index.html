@@ -42,12 +42,12 @@
             background: rgba(30, 60, 114, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
-            padding: 15px 0;
+            padding: 10px 0;
             transition: all 0.3s;
         }
 
         nav.scrolled {
-            padding: 10px 0;
+            padding: 5px 0;
             box-shadow: 0 2px 20px rgba(0,0,0,0.1);
         }
 
@@ -60,19 +60,36 @@
             align-items: center;
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--white);
-            letter-spacing: 3px;
+        .logo-nav {
+            display: flex;
+            align-items: center;
+            gap: 15px;
         }
 
-        .logo span {
-            font-weight: 300;
-            font-size: 12px;
-            display: block;
+        .logo-nav img {
+            height: 50px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            transition: all 0.3s;
+        }
+
+        .logo-text {
+            color: var(--white);
+        }
+
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 700;
             letter-spacing: 2px;
+            margin: 0;
+        }
+
+        .logo-text span {
+            font-size: 10px;
+            font-weight: 300;
+            letter-spacing: 1px;
             opacity: 0.9;
+            display: block;
         }
 
         .nav-links {
@@ -125,6 +142,7 @@
             color: var(--white);
             position: relative;
             overflow: hidden;
+            padding-top: 80px;
         }
 
         .hero::before {
@@ -147,31 +165,43 @@
         .hero-content {
             position: relative;
             z-index: 1;
-            max-width: 800px;
+            max-width: 900px;
             padding: 0 20px;
         }
 
-        .hero h1 {
-            font-size: 72px;
-            font-weight: 700;
-            letter-spacing: 8px;
-            margin-bottom: 20px;
+        .hero-logo {
+            margin-bottom: 30px;
+        }
+
+        .hero-logo img {
+            max-width: 300px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
             animation: fadeInUp 1s ease;
         }
 
-        .hero h2 {
-            font-size: 24px;
-            font-weight: 300;
-            margin-bottom: 30px;
-            opacity: 0.9;
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            margin-bottom: 15px;
             animation: fadeInUp 1s ease 0.2s both;
         }
 
-        .hero p {
+        .hero h2 {
             font-size: 20px;
-            margin-bottom: 40px;
+            font-weight: 300;
+            margin-bottom: 25px;
             opacity: 0.9;
             animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 35px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.6s both;
         }
 
         .cta-button {
@@ -185,7 +215,7 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s;
-            animation: fadeInUp 1s ease 0.6s both;
+            animation: fadeInUp 1s ease 0.8s both;
             box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
         }
 
@@ -320,6 +350,9 @@
 
         .about-image {
             position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .about-image::before {
@@ -334,36 +367,48 @@
             z-index: 0;
         }
 
-        .about-image-content {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-            padding: 60px;
+        .about-logo-box {
+            background: var(--white);
+            padding: 40px;
             border-radius: 10px;
-            color: var(--white);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             position: relative;
             z-index: 1;
+            text-align: center;
         }
 
-        .about-image-content h4 {
-            font-size: 24px;
+        .about-logo-box img {
+            max-width: 250px;
+            width: 100%;
+            height: auto;
             margin-bottom: 20px;
         }
 
-        .about-image-content ul {
+        .about-logo-box h4 {
+            color: var(--primary);
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .about-logo-box ul {
             list-style: none;
+            text-align: left;
         }
 
-        .about-image-content li {
-            padding: 10px 0;
-            padding-left: 30px;
+        .about-logo-box li {
+            padding: 8px 0;
+            padding-left: 25px;
             position: relative;
+            color: var(--gray);
+            font-size: 14px;
         }
 
-        .about-image-content li::before {
+        .about-logo-box li::before {
             content: '✓';
             position: absolute;
             left: 0;
-            font-weight: bold;
             color: var(--accent);
+            font-weight: bold;
         }
 
         /* Serviços - Processo */
@@ -756,6 +801,16 @@
             padding: 40px 20px;
         }
 
+        .footer-logo {
+            margin-bottom: 20px;
+        }
+
+        .footer-logo img {
+            max-width: 150px;
+            height: auto;
+            filter: brightness(0) invert(1);
+        }
+
         footer p {
             opacity: 0.8;
             font-size: 14px;
@@ -820,12 +875,28 @@
                 display: block;
             }
 
+            .logo-nav img {
+                height: 40px;
+            }
+
+            .logo-text h1 {
+                font-size: 18px;
+            }
+
+            .hero {
+                padding-top: 100px;
+            }
+
+            .hero-logo img {
+                max-width: 200px;
+            }
+
             .hero h1 {
-                font-size: 42px;
+                font-size: 32px;
             }
 
             .hero h2 {
-                font-size: 18px;
+                font-size: 16px;
             }
 
             .about-grid,
@@ -872,9 +943,12 @@
     <!-- Navegação -->
     <nav id="navbar">
         <div class="nav-container">
-            <div class="logo">
-                CINSEI
-                <span>Consultoria de Investimento e Serviços, E.I.</span>
+            <div class="logo-nav">
+                <img src="CINSEI.png" alt="CINSEI Logo">
+                <div class="logo-text">
+                    <h1>CINSEI</h1>
+                    <span>Consultoria de Investimento e Serviços, E.I.</span>
+                </div>
             </div>
             <ul class="nav-links">
                 <li><a href="#inicio">Início</a></li>
@@ -890,6 +964,9 @@
     <!-- Hero Section -->
     <section class="hero" id="inicio">
         <div class="hero-content">
+            <div class="hero-logo">
+                <img src="CINSEI.png" alt="CINSEI - Consultoria de Investimento e Serviços">
+            </div>
             <h1>CINSEI</h1>
             <h2>Consultoria de Investimento e Serviços, E.I.</h2>
             <p>Constituímos a sua empresa em Moçambique<br>Do registo ao acompanhamento anual</p>
@@ -928,7 +1005,8 @@
             </div>
             
             <div class="about-image">
-                <div class="about-image-content">
+                <div class="about-logo-box">
+                    <img src="CINSEI.png" alt="CINSEI Logo">
                     <h4>Por que escolher a CINSEI?</h4>
                     <ul>
                         <li>Processo integrado e ágil</li>
@@ -1173,7 +1251,7 @@
             <div class="contact-form">
                 <h3>Solicite uma Proposta</h3>
                 
-                <!-- ✅ FORMULÁRIO FORMSUBMIT - FUNCIONA IMEDIATAMENTE -->
+                <!-- FORMULÁRIO FORMSUBMIT - FUNCIONA IMEDIATAMENTE -->
                 <form id="contactForm" action="https://formsubmit.co/cinseiconsultorias25@gmail.com" method="POST">
                     
                     <!-- Email secundário (recebe cópia) -->
@@ -1240,6 +1318,9 @@
 
     <!-- Footer -->
     <footer>
+        <div class="footer-logo">
+            <img src="CINSEI.png" alt="CINSEI Logo">
+        </div>
         <p>&copy; 2025 CINSEI - Consultoria de Investimento e Serviços, E.I. Todos os direitos reservados.</p>
         <p class="legal-footer">NUIT: 182625213 | Registo Comercial: 105049346 | Maputo, Moçambique</p>
         <div class="social-links">
