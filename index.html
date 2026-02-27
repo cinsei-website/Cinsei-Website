@@ -1173,14 +1173,23 @@
             <div class="contact-form">
                 <h3>Solicite uma Proposta</h3>
                 
-                <!-- ⚠️  IMPORTANTE: SUBSTITUA "xnqevjdr" PELO SEU CÓDIGO DO FORMSPREE -->
-                <form id="contactForm" action="https://formspree.io/f/xnqevjdr" method="POST">
+                <!-- ✅ FORMULÁRIO FORMSUBMIT - FUNCIONA IMEDIATAMENTE -->
+                <form id="contactForm" action="https://formsubmit.co/cinseiconsultorias25@gmail.com" method="POST">
+                    
+                    <!-- Email secundário (recebe cópia) -->
+                    <input type="hidden" name="_cc" value="zenhani.consultantadt@gmail.com">
                     
                     <!-- Redirecionamento após envio -->
                     <input type="hidden" name="_next" value="https://cinsei-website.github.io/Cinsei-Website/obrigado.html">
                     
-                    <!-- Campo oculto para evitar spam -->
-                    <input type="text" name="_gotcha" style="display:none">
+                    <!-- Assunto do email -->
+                    <input type="hidden" name="_subject" value="Nova Solicitação - CINSEI Website">
+                    
+                    <!-- Desativar captcha -->
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <!-- Template do email em tabela -->
+                    <input type="hidden" name="_template" value="table">
                     
                     <div class="form-group">
                         <label for="nome">Nome Completo *</label>
