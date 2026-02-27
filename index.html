@@ -1,1 +1,1329 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINSEI - Consultoria de Investimento e Serviços | Moçambique</title>
+    <meta name="description" content="CINSEI - Consultoria de Investimento e Serviços em Moçambique. Constituição de empresas, registo comercial, NUIT, INSS e acompanhamento por 1 ano.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        :root {
+            --primary: #1e3c72;
+            --primary-dark: #152a52;
+            --secondary: #2a5298;
+            --accent: #28a745;
+            --light: #f8f9fa;
+            --dark: #333;
+            --gray: #666;
+            --white: #ffffff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        /* Navegação */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(30, 60, 114, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.3s;
+        }
+
+        nav.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 3px;
+        }
+
+        .logo span {
+            font-weight: 300;
+            font-size: 12px;
+            display: block;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: opacity 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--white);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            color: var(--white);
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/></svg>');
+            background-size: 300px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h2 {
+            font-size: 24px;
+            font-weight: 300;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: var(--accent);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            animation: fadeInUp 1s ease 0.6s both;
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator::after {
+            content: '↓';
+            color: var(--white);
+            font-size: 30px;
+            opacity: 0.7;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+            40% { transform: translateX(-50%) translateY(-10px); }
+            60% { transform: translateX(-50%) translateY(-5px); }
+        }
+
+        /* Secções Gerais */
+        section {
+            padding: 100px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+            color: var(--primary);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: var(--accent);
+        }
+
+        .section-header p {
+            color: var(--gray);
+            font-size: 18px;
+            max-width: 600px;
+            margin: 30px auto 0;
+        }
+
+        /* Sobre */
+        .about {
+            background: var(--light);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .about-content h3 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .about-content p {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--white);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .about-image {
+            position: relative;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: 20px;
+            bottom: 20px;
+            border: 3px solid var(--primary);
+            border-radius: 10px;
+            z-index: 0;
+        }
+
+        .about-image-content {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 60px;
+            border-radius: 10px;
+            color: var(--white);
+            position: relative;
+            z-index: 1;
+        }
+
+        .about-image-content h4 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .about-image-content ul {
+            list-style: none;
+        }
+
+        .about-image-content li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .about-image-content li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        /* Serviços - Processo */
+        .services {
+            background: var(--white);
+        }
+
+        .process-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .process-timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 50%;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 50%;
+        }
+
+        .timeline-content {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            max-width: 400px;
+            position: relative;
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            border-left: none;
+            border-right: 4px solid var(--primary);
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+
+        .timeline-number {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            border: 4px solid var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content h3 {
+            color: var(--primary);
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .timeline-content p {
+            color: var(--gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Serviços Adicionais */
+        .additional-services {
+            background: var(--light);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-top: 4px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-top-color: var(--primary);
+        }
+
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .service-card p {
+            color: var(--gray);
+            line-height: 1.6;
+        }
+
+        /* Por que escolher */
+        .why-us {
+            background: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 32px;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .feature-item:hover .feature-icon {
+            background: var(--primary);
+            color: var(--white);
+            transform: rotateY(360deg);
+        }
+
+        .feature-item h3 {
+            font-size: 18px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        /* Contacto */
+        .contact {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 100px 20px;
+        }
+
+        .contact .section-header h2 {
+            color: var(--white);
+        }
+
+        .contact .section-header h2::after {
+            background: var(--white);
+        }
+
+        .contact .section-header p {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-info h3 {
+            font-size: 28px;
+            margin-bottom: 30px;
+        }
+
+        .contact-details {
+            margin-bottom: 40px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(10px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 20px;
+        }
+
+        .contact-text h4 {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+            margin-bottom: 5px;
+        }
+
+        .contact-text p {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .emails-list {
+            margin-top: 10px;
+        }
+
+        .emails-list p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin: 5px 0;
+        }
+
+        .legal-info {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            border-left: 4px solid var(--accent);
+        }
+
+        .legal-info h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--white);
+        }
+
+        .legal-info p {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .contact-form {
+            background: var(--white);
+            padding: 40px;
+            border-radius: 10px;
+            color: var(--dark);
+        }
+
+        .contact-form h3 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--gray);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+            font-size: 14px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.3);
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .form-status {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        .form-status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .form-status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        footer p {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        footer .legal-footer {
+            margin-top: 15px;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        footer .social-links {
+            margin-top: 20px;
+        }
+
+        footer .social-links a {
+            color: var(--white);
+            font-size: 24px;
+            margin: 0 15px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+            text-decoration: none;
+        }
+
+        footer .social-links a:hover {
+            opacity: 1;
+        }
+
+        /* WhatsApp Float Button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25d366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        /* Responsivo */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+            }
+
+            .hero h2 {
+                font-size: 18px;
+            }
+
+            .about-grid,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline-item,
+            .timeline-item:nth-child(even) {
+                padding-left: 80px;
+                padding-right: 20px;
+                justify-content: flex-start;
+            }
+
+            .process-timeline::before {
+                left: 40px;
+            }
+
+            .timeline-number {
+                left: 40px;
+                transform: translateX(-50%);
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .whatsapp-float {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navegação -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                CINSEI
+                <span>Consultoria de Investimento e Serviços, E.I.</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Início</a></li>
+                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#servicos">Serviços</a></li>
+                <li><a href="#processo">Processo</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+            <div class="mobile-menu">☰</div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>CINSEI</h1>
+            <h2>Consultoria de Investimento e Serviços, E.I.</h2>
+            <p>Constituímos a sua empresa em Moçambique<br>Do registo ao acompanhamento anual</p>
+            <a href="#contacto" class="cta-button">Solicitar Proposta</a>
+        </div>
+        <div class="scroll-indicator"></div>
+    </section>
+
+    <!-- Sobre -->
+    <section class="about" id="sobre">
+        <div class="section-header">
+            <h2>Quem Somos</h2>
+            <p>Especialistas em simplificar o processo de investimento em Moçambique</p>
+        </div>
+        
+        <div class="about-grid">
+            <div class="about-content">
+                <h3>O Seu Parceiro de Confiança</h3>
+                <p>A <strong>CINSEI</strong> é uma empresa de consultoria especializada em investimento e serviços empresariais, com vasta experiência no mercado moçambicano. Os nossos consultores possuem <strong>mais de 10 anos de experiência</strong> na área de constituição e gestão empresarial.</p>
+                <p>Compreendemos os desafios do ambiente de negócios em Moçambique e trabalhamos para eliminar a burocracia, permitindo que se concentre no crescimento do seu negócio.</p>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">10+</span>
+                        <span class="stat-label">Anos de Experiência</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">20+</span>
+                        <span class="stat-label">Empresas Constituídas</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">1 Ano</span>
+                        <span class="stat-label">Acompanhamento</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="about-image">
+                <div class="about-image-content">
+                    <h4>Por que escolher a CINSEI?</h4>
+                    <ul>
+                        <li>Processo integrado e ágil</li>
+                        <li>Consultores com mais de 10 anos de experiência</li>
+                        <li>Transparência em todas as etapas</li>
+                        <li>Suporte personalizado durante 1 ano</li>
+                        <li>Preços competitivos e sem surpresas</li>
+                        <li>Conhecimento profundo da legislação moçambicana</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Processo de Constituição -->
+    <section class="services" id="processo">
+        <div class="section-header">
+            <h2>Processo de Constituição</h2>
+            <p>10 passos completos para legalizar a sua empresa em Moçambique</p>
+        </div>
+
+        <div class="process-timeline">
+            <div class="timeline-item">
+                <div class="timeline-number">1</div>
+                <div class="timeline-content">
+                    <h3>Reserva de Nome</h3>
+                    <p>Verificação de disponibilidade e reserva da denominação social na Conservatória do Registo Comercial de Moçambique.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-number">2</div>
+                <div class="timeline-content">
+                    <h3>Elaboração de Estatutos</h3>
+                    <p>Redação do contrato social conforme modelo legal moçambicano, definindo objeto social, capital, sede e estrutura societária.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-number">3</div>
+                <div class="timeline-content">
+                    <h3>Abertura de Conta Bancária</h3>
+                    <p>Intermediação com bancos comerciais para abertura de conta provisória em nome da empresa e depósito do capital social mínimo.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-number">4</div>
+                <div class="timeline-content">
+                    <h3>Certidão Definitiva</h3>
+                    <p>Obtenção da certidão de registo comercial definitiva, conferindo personalidade jurídica e capacidade legal à empresa.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-number">5</div>
+                <div class="timeline-content">
+                    <h3>Registo Fiscal (NUIT)</h3>
+                    <p>Inscrição na Autoridade Tributária de Moçambique e obtenção do Número Único de Identificação Tributária (NUIT).</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-number">6</div>
+                <div class="timeline-content">
+                    <h3>Publicação no Boletim da República</h3>
+                    <p>Tramitação e publicação do extrato de constituição no Boletim da República para efeitos de terceiros.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-number">7</div>
+                <div class="timeline-content">
+                    <h3>Emissão do Alvará</h3>
+                    <p>Requerimento e obtenção do alvará de funcionamento/licença comercial junto dos órgãos municipais competentes.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-number">8</div>
+                <div class="timeline-content">
+                    <h3>Início de Atividade</h3>
+                    <p>Comunicação de início de atividade à Autoridade Tributária e regularização do regime fiscal aplicável (Simplified ou General).</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-number">9</div>
+                <div class="timeline-content">
+                    <h3>Registo no INSS</h3>
+                    <p>Cadastro da empresa no Instituto Nacional de Segurança Social para cumprimento das obrigações previdenciais laborais.</p>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-number" style="background: var(--accent);">10</div>
+                <div class="timeline-content" style="border-left-color: var(--accent);">
+                    <h3>Acompanhamento por 1 Ano</h3>
+                    <p><strong>Exclusivo CINSEI:</strong> Suporte contínuo nas obrigações legais, acompanhamento de prazos fiscais, consultoria pontual e resolução de questões emergentes durante o primeiro ano de atividade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços Adicionais -->
+    <section class="additional-services" id="servicos">
+        <div class="section-header">
+            <h2>Serviços Adicionais</h2>
+            <p>Soluções completas para o crescimento do seu negócio</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💼</div>
+                <h3>Consultoria de Investimento</h3>
+                <p>Análise de viabilidade, estudos de mercado e estratégias de entrada em Moçambique para investidores nacionais e estrangeiros.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📋</div>
+                <h3>Licenciamento Especializado</h3>
+                <p>Obtenção de licenças sectoriais específicas para saúde, construção, turismo, mineração e outros sectores regulados.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🏭</div>
+                <h3>Apoio a Conteúdo Local</h3>
+                <p>Consultoria para cumprimento de requisitos de conteúdo local em projetos de grande investimento e indústrias extractivas.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3>Investidores Estrangeiros</h3>
+                <p>Apoio em vistos de investidor, autorizações de trabalho, regularização migratória e adaptação ao quadro legal moçambicano.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🔍</div>
+                <h3>Due Diligence</h3>
+                <p>Auditoria legal e fiscal de empresas em processos de aquisição, fusão ou parcerias estratégicas.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📊</div>
+                <h3>Estudos de Mercado</h3>
+                <p>Pesquisa e análise de mercado para sectores específicos, identificação de oportunidades e avaliação da concorrência.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Por que escolher -->
+    <section class="why-us">
+        <div class="section-header">
+            <h2>O Nosso Diferencial</h2>
+            <p>Compromisso com a excelência e resultados</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-item">
+                <div class="feature-icon">⚡</div>
+                <h3>Agilidade</h3>
+                <p>Processos otimizados que reduzem prazos burocráticos</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">🤝</div>
+                <h3>Transparência</h3>
+                <p>Comunicação clara em todas as etapas do processo</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">🛡️</div>
+                <h3>Segurança</h3>
+                <p>Cumprimento rigoroso de toda a legislação vigente</p>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon">💡</div>
+                <h3>Experiência</h3>
+                <p>Mais de 10 anos de experiência no mercado moçambicano</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="contact" id="contacto">
+        <div class="section-header">
+            <h2>Contacte-nos</h2>
+            <p>Pronto para iniciar o seu investimento em Moçambique?</p>
+        </div>
+
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Estamos aqui para ajudar</h3>
+                <p style="margin-bottom: 30px; opacity: 0.9;">Entre em contacto connosco para uma consulta gratuita e sem compromisso. Analisaremos as suas necessidades específicas e apresentaremos uma proposta personalizada.</p>
+                
+                <div class="contact-details">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-text">
+                            <h4>Morada</h4>
+                            <p>Maputo, Moçambique</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📞</div>
+                        <div class="contact-text">
+                            <h4>Telefone</h4>
+                            <p>+258 827 743 075</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-text">
+                            <h4>Emails</h4>
+                            <div class="emails-list">
+                                <p>cinseiconsultorias25@gmail.com</p>
+                                <p>zenhani.consultantadt@gmail.com</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">🕐</div>
+                        <div class="contact-text">
+                            <h4>Horário</h4>
+                            <p>Segunda a Sexta: 08h00 - 17h00</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="legal-info">
+                    <h4>Informações Legais</h4>
+                    <p><strong>NUIT:</strong> 182625213</p>
+                    <p><strong>Registo Comercial:</strong> 105049346</p>
+                    <p><strong>Nome:</strong> CINSEI - Consultoria de Investimento e Serviços, E.I.</p>
+                </div>
+            </div>
+
+            <div class="contact-form">
+                <h3>Solicite uma Proposta</h3>
+                
+                <!-- ✅ FORMULÁRIO FORMSUBMIT - FUNCIONA IMEDIATAMENTE -->
+                <form id="contactForm" action="https://formsubmit.co/cinseiconsultorias25@gmail.com" method="POST">
+                    
+                    <!-- Email secundário (recebe cópia) -->
+                    <input type="hidden" name="_cc" value="zenhani.consultantadt@gmail.com">
+                    
+                    <!-- Redirecionamento após envio -->
+                    <input type="hidden" name="_next" value="https://cinsei-website.github.io/Cinsei-Website/obrigado.html">
+                    
+                    <!-- Assunto do email -->
+                    <input type="hidden" name="_subject" value="Nova Solicitação - CINSEI Website">
+                    
+                    <!-- Desativar captcha -->
+                    <input type="hidden" name="_captcha" value="false">
+                    
+                    <!-- Template do email em tabela -->
+                    <input type="hidden" name="_template" value="table">
+                    
+                    <div class="form-group">
+                        <label for="nome">Nome Completo *</label>
+                        <input type="text" id="nome" name="nome" placeholder="O seu nome completo" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" placeholder="O seu email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telefone">Telefone *</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="+258 ___ ___ ___" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="servico">Tipo de Serviço *</label>
+                        <select id="servico" name="servico" required>
+                            <option value="">Selecione um serviço...</option>
+                            <option value="constituicao">Constituição de Empresa</option>
+                            <option value="consultoria">Consultoria de Investimento</option>
+                            <option value="licenciamento">Licenciamento Especializado</option>
+                            <option value="conteudo-local">Apoio a Conteúdo Local</option>
+                            <option value="investidor-estrangeiro">Investidores Estrangeiros</option>
+                            <option value="due-diligence">Due Diligence</option>
+                            <option value="estudo-mercado">Estudos de Mercado</option>
+                            <option value="outro">Outro Serviço</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="mensagem">Mensagem / Detalhes do Pedido</label>
+                        <textarea id="mensagem" name="mensagem" rows="4" placeholder="Descreva as suas necessidades específicas..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">Enviar Pedido</button>
+                    
+                    <div id="formStatus" class="form-status"></div>
+                </form>
+                
+                <p style="margin-top: 15px; font-size: 12px; color: #666; text-align: center;">
+                    Os seus dados estão protegidos. As solicitações serão enviadas para ambos os emails da CINSEI.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 CINSEI - Consultoria de Investimento e Serviços, E.I. Todos os direitos reservados.</p>
+        <p class="legal-footer">NUIT: 182625213 | Registo Comercial: 105049346 | Maputo, Moçambique</p>
+        <div class="social-links">
+            <a href="#" title="Facebook">📘</a>
+            <a href="#" title="LinkedIn">💼</a>
+            <a href="https://wa.me/258827743075" title="WhatsApp" target="_blank">📱</a>
+        </div>
+    </footer>
+
+    <!-- Botão Flutuante WhatsApp -->
+    <a href="https://wa.me/258827743075" class="whatsapp-float" target="_blank" title="Fale connosco no WhatsApp">
+        💬
+    </a>
+
+    <script>
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+
+        // Observe timeline items
+        document.querySelectorAll('.timeline-item').forEach((el, index) => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(20px)";
+            el.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(el);
+        });
+
+        // Observe service cards
+        document.querySelectorAll('.service-card').forEach((el, index) => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(20px)";
+            el.style.transition = `all 0.6s ease ${index * 0.1}s`;
+            observer.observe(el);
+        });
+
+        // Formulário - Feedback visual durante envio
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            const btn = document.getElementById('submitBtn');
+            const status = document.getElementById('formStatus');
+            
+            btn.disabled = true;
+            btn.textContent = 'A enviar...';
+            
+            setTimeout(() => {
+                status.className = 'form-status success';
+                status.textContent = 'A processar o seu pedido... Aguarde o redirecionamento.';
+            }, 500);
+        });
+    </script>
+
+</body>
+</html>
