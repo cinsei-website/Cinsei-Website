@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obrigado - CINSEI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: #28a745;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            font-size: 50px;
+            animation: scaleIn 0.5s ease 0.3s both;
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 15px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border-left: 4px solid #28a745;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        .contact-info {
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .contact-info h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .contact-details {
+            display: grid;
+            gap: 15px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 16px;
+        }
+
+        .contact-item strong {
+            opacity: 0.8;
+        }
+
+        .whatsapp-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: #25d366;
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .whatsapp-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 32px; }
+            p { font-size: 16px; }
+            .success-icon { width: 80px; height: 80px; font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✓</div>
+        
+        <h1>Obrigado!</h1>
+        
+        <p>O seu pedido foi enviado com sucesso.</p>
+        
+        <div class="highlight">
+            <p><strong>A equipa da CINSEI irá analisar a sua solicitação e entrará em contacto consigo brevemente.</strong></p>
+            <p style="font-size: 14px; margin-top: 10px;">Verifique o seu email (incluindo a pasta de spam) nos próximos minutos.</p>
+        </div>
+        
+        <a href="index.html" class="btn">← Voltar ao Website</a>
+        
+        <div class="contact-info">
+            <h3>Contacto Directo</h3>
+            
+            <div class="contact-details">
+                <div class="contact-item">
+                    <span>📞</span>
+                    <strong>Telefone:</strong>
+                    <span>+258 827 743 075</span>
+                </div>
+                
+                <div class="contact-item">
+                    <span>✉️</span>
+                    <strong>Emails:</strong>
+                </div>
+                <div class="contact-item" style="flex-direction: column; gap: 5px;">
+                    <span>cinseiconsultorias25@gmail.com</span>
+                    <span>zenhani.consultantadt@gmail.com</span>
+                </div>
+            </div>
+            
+            <a href="https://wa.me/258827743075" class="whatsapp-btn" target="_blank">
+                <span>💬</span>
+                Fale connosco no WhatsApp
+            </a>
+        </div>
+    </div>
+</body>
+</html>
