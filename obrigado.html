@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obrigado - CINSEI</title>
+    <link rel="icon" type="image/png" href="cinsei_favicon.png">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --accent: #d69e2e;
+            --success: #48bb78;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, #2c5282 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        .container {
+            max-width: 600px;
+        }
+        .logo {
+            width: 100px;
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+        }
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: scaleIn 0.5s ease;
+        }
+        @keyframes scaleIn {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 0.5rem;
+            transition: transform 0.3s;
+        }
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+        .whatsapp-btn {
+            background: #25d366;
+        }
+        .contact-info {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+        .contact-info a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="cinsei_logo.png" alt="CINSEI" class="logo">
+        <div class="success-icon">✓</div>
+        <h1>Obrigado!</h1>
+        <p>A sua solicitação foi recebida com sucesso.<br>
+        A nossa equipa irá analisar e entrar em contacto consigo em breve.</p>
+
+        <a href="index.html" class="btn">← Voltar ao Site</a>
+        <a href="https://wa.me/258827743075" class="btn whatsapp-btn" target="_blank">💬 WhatsApp</a>
+
+        <div class="contact-info">
+            <p>Emails: <a href="mailto:cinseiconsultorias25@gmail.com">cinseiconsultorias25@gmail.com</a> | 
+            <a href="mailto:zenhani.consultantadt@gmail.com">zenhani.consultantadt@gmail.com</a></p>
+            <p>Tel: <a href="tel:+258827743075">+258 82 774 3075</a></p>
+        </div>
+    </div>
+
+    <script>
+        // Redirecionar após 10 segundos
+        setTimeout(function() {
+            window.location.href = 'index.html';
+        }, 10000);
+    </script>
+</body>
+</html>

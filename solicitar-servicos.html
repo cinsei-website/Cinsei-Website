@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Serviços - CINSEI</title>
+    <link rel="icon" type="image/png" href="cinsei_favicon.png">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #f0f4f8; 
+            line-height: 1.6;
+            color: #333;
+        }
+        .header { 
+            background: #1e3a5f; 
+            color: white; 
+            text-align: center; 
+            padding: 2rem 1rem;
+        }
+        .header img { width: 80px; margin-bottom: 1rem; }
+        .container { 
+            max-width: 600px; 
+            margin: 2rem auto; 
+            padding: 0 1rem;
+        }
+        .card { 
+            background: white; 
+            padding: 2rem; 
+            border-radius: 10px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+        h2 { color: #1e3a5f; margin-bottom: 1rem; font-size: 1.2rem; }
+        .form-group { margin-bottom: 1rem; }
+        label { display: block; margin-bottom: 0.3rem; font-weight: bold; color: #555; }
+        input, textarea, select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        textarea { min-height: 80px; resize: vertical; }
+        .checkbox-group { 
+            display: grid; 
+            gap: 0.5rem;
+        }
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .checkbox-item:hover { background: #e9ecef; }
+        .checkbox-item input { width: auto; }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: #d69e2e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+        }
+        .btn:hover { background: #b7791f; }
+        .btn-whatsapp { background: #25d366; }
+        .btn-whatsapp:hover { background: #128c7e; }
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 5px 5px 0;
+            font-size: 0.9rem;
+        }
+        .success {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            background: #25d366;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="cinsei_logo.png" alt="CINSEI">
+        <h1>Solicitar Serviços</h1>
+        <p>Preencha o formulário abaixo</p>
+    </div>
+
+    <div class="container">
+        <!-- Mensagem de Sucesso -->
+        <div id="successMsg" class="success">
+            ✅ Solicitação enviada com sucesso!<br>
+            <small>Entraremos em contacto em breve.</small>
+        </div>
+
+        <!-- Opção 1: FormSubmit (Online) -->
+        <div class="card" id="formOnline">
+            <div class="info-box">
+                <strong>📧 Opção 1: Email Automático</strong><br>
+                Funciona quando o site está publicado online (GitHub, servidor, etc.)
+            </div>
+
+            <form action="https://formsubmit.co/cinseiconsultorias25@gmail.com" method="POST">
+                <!-- Configuração -->
+                <input type="hidden" name="_cc" value="zenhani.consultantadt@gmail.com">
+                <input type="hidden" name="_subject" value="Nova Solicitacao CINSEI">
+                <input type="hidden" name="_template" value="table">
+
+                <h2>📋 Dados Pessoais</h2>
+
+                <div class="form-group">
+                    <label>Nome Completo *</label>
+                    <input type="text" name="nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Email *</label>
+                    <input type="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Telefone/WhatsApp *</label>
+                    <input type="tel" name="telefone" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Empresa (opcional)</label>
+                    <input type="text" name="empresa">
+                </div>
+
+                <h2>🎯 Serviços Desejados *</h2>
+                <div class="checkbox-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="Constituicao de Empresa">
+                        Constituição de Empresa
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="Consultoria de Investimento">
+                        Consultoria de Investimento
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="Licenciamento">
+                        Licenciamento Especializado
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="Conteudo Local">
+                        Apoio a Conteúdo Local
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="Investidores Estrangeiros">
+                        Investidores Estrangeiros
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="Due Diligence">
+                        Due Diligence
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="Estudos de Mercado">
+                        Estudos de Mercado
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="servicos" value="Acompanhamento">
+                        Acompanhamento Anual
+                    </label>
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                    <label>Mensagem (opcional)</label>
+                    <textarea name="mensagem" placeholder="Descreva suas necessidades..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">📧 ENVIAR POR EMAIL</button>
+            </form>
+        </div>
+
+        <!-- Opção 2: Mailto (Local) -->
+        <div class="card">
+            <div class="info-box" style="background: #fff3cd; border-color: #ffc107;">
+                <strong>✉️ Opção 2: Usar Meu Email</strong><br>
+                Funciona no seu computador! Abre Gmail/Outlook automaticamente.
+            </div>
+
+            <button onclick="enviarMailto()" class="btn" style="background: #6c757d;">
+                ✉️ ABRIR NO MEU EMAIL
+            </button>
+        </div>
+
+        <!-- Opção 3: WhatsApp -->
+        <div class="card">
+            <div class="info-box" style="background: #d4edda; border-color: #28a745;">
+                <strong>💬 Opção 3: WhatsApp</strong><br>
+                O mais rápido! Envie diretamente pelo WhatsApp.
+            </div>
+
+            <button onclick="enviarWhatsApp()" class="btn btn-whatsapp">
+                💬 ENVIAR PELO WHATSAPP
+            </button>
+        </div>
+
+        <!-- Contato Direto -->
+        <div class="card" style="text-align: center;">
+            <h2>📞 Contato Direto</h2>
+            <p><strong>Email:</strong> <a href="mailto:cinseiconsultorias25@gmail.com">cinseiconsultorias25@gmail.com</a></p>
+            <p><strong>Email 2:</strong> <a href="mailto:zenhani.consultantadt@gmail.com">zenhani.consultantadt@gmail.com</a></p>
+            <p><strong>WhatsApp:</strong> <a href="tel:+258827743075">+258 82 774 3075</a></p>
+        </div>
+    </div>
+
+    <a href="https://wa.me/258827743075" class="whatsapp-float" target="_blank">💬</a>
+
+    <script>
+        // Verificar se está online ou local
+        if (window.location.protocol === 'file:') {
+            // Está abrindo localmente - mostrar aviso
+            document.getElementById('formOnline').style.opacity = '0.6';
+            document.getElementById('formOnline').innerHTML += `
+                <div style="background: #f8d7da; color: #721c24; padding: 1rem; margin-top: 1rem; border-radius: 5px;">
+                    ⚠️ <strong>Aviso:</strong> Você está vendo este arquivo localmente. 
+                    O envio automático só funciona quando o site está publicado online.
+                    <br><br>
+                    <strong>Use as Opções 2 ou 3 abaixo!</strong>
+                </div>
+            `;
+        }
+
+        // Enviar via Mailto
+        function enviarMailto() {
+            // Coletar dados
+            const nome = prompt('Nome Completo:');
+            if (!nome) return;
+
+            const email = prompt('Seu Email:');
+            if (!email) return;
+
+            const telefone = prompt('Telefone/WhatsApp:');
+            if (!telefone) return;
+
+            const servicos = prompt('Serviços desejados (separe por vírgula):\n\n1. Constituição de Empresa\n2. Consultoria de Investimento\n3. Licenciamento\n4. Conteúdo Local\n5. Investidores Estrangeiros\n6. Due Diligence\n7. Estudos de Mercado\n8. Acompanhamento');
+            if (!servicos) return;
+
+            const mensagem = prompt('Mensagem adicional (opcional):') || '';
+
+            // Criar email
+            const subject = encodeURIComponent('Nova Solicitacao de Servicos - CINSEI');
+            const body = encodeURIComponent(`Nome: ${nome}
+Email: ${email}
+Telefone: ${telefone}
+
+Servicos: ${servicos}
+
+Mensagem: ${mensagem}`);
+
+            // Abrir email
+            window.location.href = `mailto:cinseiconsultorias25@gmail.com?cc=zenhani.consultantadt@gmail.com&subject=${subject}&body=${body}`;
+
+            alert('✅ Seu aplicativo de email foi aberto! Verifique se o email foi enviado.');
+        }
+
+        // Enviar via WhatsApp
+        function enviarWhatsApp() {
+            // Coletar dados
+            const nome = prompt('Nome Completo:');
+            if (!nome) return;
+
+            const email = prompt('Seu Email:');
+            if (!email) return;
+
+            const telefone = prompt('Telefone/WhatsApp:');
+            if (!telefone) return;
+
+            const servicos = prompt('Serviços desejados (separe por vírgula):\n\n1. Constituição de Empresa\n2. Consultoria de Investimento\n3. Licenciamento\n4. Conteúdo Local\n5. Investidores Estrangeiros\n6. Due Diligence\n7. Estudos de Mercado\n8. Acompanhamento');
+            if (!servicos) return;
+
+            const mensagem = prompt('Mensagem adicional (opcional):') || '';
+
+            // Criar mensagem WhatsApp
+            const text = encodeURIComponent(`*Nova Solicitacao - CINSEI*
+
+*Nome:* ${nome}
+*Email:* ${email}
+*Telefone:* ${telefone}
+
+*Servicos:* ${servicos}
+
+*Mensagem:* ${mensagem}`);
+
+            // Abrir WhatsApp
+            window.open(`https://wa.me/258827743075?text=${text}`, '_blank');
+        }
+
+        // Mostrar sucesso após envio FormSubmit
+        if (window.location.search.includes('success')) {
+            document.getElementById('successMsg').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

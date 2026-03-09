@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#1e3a5f">
+    <title>CINSEI - Consultoria em Investimento e Serviços</title>
+    <link rel="icon" type="image/png" href="cinsei_favicon.png">
+    <style>
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2c5282;
+            --accent: #d69e2e;
+            --accent-hover: #b7791f;
+            --bg-light: #f7fafc;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--text-dark); overflow-x: hidden; }
+
+        /* Language Selector */
+        .lang-switcher {
+            position: fixed; top: 20px; right: 20px; z-index: 1000;
+            background: rgba(255, 255, 255, 0.95); border-radius: 50px;
+            box-shadow: var(--shadow-lg); padding: 5px; display: flex; gap: 5px;
+            backdrop-filter: blur(10px);
+        }
+        .lang-btn {
+            padding: 8px 16px; border: none; background: transparent;
+            color: var(--text-light); cursor: pointer; border-radius: 25px;
+            font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease;
+        }
+        .lang-btn.active { background: var(--primary); color: var(--white); }
+
+        /* Navigation with Logo */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
+            z-index: 999; padding: 0.5rem 5%; box-shadow: var(--shadow);
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 70px; transition: all 0.3s ease;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+        .logo-img { height: 50px; width: auto; object-fit: contain; }
+        .logo-text { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; }
+        .mobile-menu { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 10px; }
+        .mobile-menu span { width: 25px; height: 3px; background: var(--primary); transition: 0.3s; }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: var(--white); padding: 180px 5% 100px; text-align: center;
+            position: relative; overflow: hidden; min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .hero-logo { width: 120px; height: auto; margin-bottom: 2rem; filter: drop-shadow(0 4px 20px rgba(0,0,0,0.3)); animation: fadeInUp 1s ease; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; font-weight: 700; animation: fadeInUp 1s ease 0.2s both; }
+        .hero .subtitle { font-size: 1.5rem; margin-bottom: 2rem; opacity: 0.9; animation: fadeInUp 1s ease 0.4s both; }
+        .hero .tagline { font-size: 1.2rem; margin-bottom: 3rem; opacity: 0.8; animation: fadeInUp 1s ease 0.6s both; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .cta-button {
+            display: inline-block; padding: 1rem 2.5rem; background: var(--accent); color: var(--white);
+            text-decoration: none; border-radius: 50px; font-weight: 600; font-size: 1.1rem;
+            transition: all 0.3s; box-shadow: 0 4px 15px rgba(214, 158, 46, 0.4);
+            animation: fadeInUp 1s ease 0.8s both; border: none; cursor: pointer;
+        }
+        .cta-button:hover { background: var(--accent-hover); transform: translateY(-3px); }
+
+        .stats { display: flex; justify-content: center; gap: 4rem; margin-top: 4rem; flex-wrap: wrap; animation: fadeInUp 1s ease 1s both; }
+        .stat-item { text-align: center; }
+        .stat-number { font-size: 3rem; font-weight: 700; color: var(--accent); display: block; }
+        .stat-label { font-size: 0.9rem; opacity: 0.9; margin-top: 0.5rem; }
+
+        /* Sections */
+        section { padding: 80px 5%; max-width: 1200px; margin: 0 auto; }
+        h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 3rem; text-align: center; position: relative; padding-bottom: 1rem; }
+        h2::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 80px; height: 4px; background: var(--accent); border-radius: 2px; }
+
+        /* About */
+        .about { background: var(--bg-light); }
+        .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .about-text { font-size: 1.1rem; line-height: 1.8; color: var(--text-dark); }
+        .about-text strong { color: var(--primary); }
+        .features-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .feature-item { background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: var(--shadow); display: flex; align-items: start; gap: 1rem; transition: transform 0.3s; }
+        .feature-item:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
+        .feature-icon { font-size: 1.5rem; color: var(--accent); flex-shrink: 0; }
+
+        /* Process */
+        .process { background: var(--white); }
+        .process-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+        .process-card { background: var(--bg-light); padding: 2rem; border-radius: 16px; position: relative; overflow: hidden; transition: all 0.3s; border-left: 4px solid var(--accent); }
+        .process-card:hover { transform: translateX(10px); box-shadow: var(--shadow-lg); }
+        .process-number { position: absolute; top: -20px; right: -20px; font-size: 6rem; font-weight: 700; color: rgba(30, 58, 95, 0.05); line-height: 1; }
+        .process-card h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.3rem; }
+        .process-card p { color: var(--text-light); line-height: 1.6; }
+
+        /* Services */
+        .services { background: linear-gradient(to bottom, var(--bg-light), var(--white)); }
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
+        .service-card { background: var(--white); padding: 2.5rem; border-radius: 20px; box-shadow: var(--shadow); transition: all 0.3s; position: relative; overflow: hidden; }
+        .service-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 5px; background: linear-gradient(90deg, var(--accent), var(--primary)); transform: scaleX(0); transition: transform 0.3s; }
+        .service-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
+        .service-card:hover::before { transform: scaleX(1); }
+        .service-icon { font-size: 3rem; margin-bottom: 1.5rem; display: block; }
+        .service-card h3 { color: var(--primary); margin-bottom: 1rem; font-size: 1.4rem; }
+        .service-card p { color: var(--text-light); line-height: 1.6; }
+
+        /* Why Us */
+        .why-us { background: var(--primary); color: var(--white); text-align: center; }
+        .why-us h2 { color: var(--white); }
+        .why-us h2::after { background: var(--accent); }
+        .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-top: 3rem; }
+        .why-item { padding: 2rem; }
+        .why-icon { font-size: 3rem; margin-bottom: 1.5rem; display: block; }
+        .why-item h3 { font-size: 1.3rem; margin-bottom: 1rem; color: var(--accent); }
+        .why-item p { opacity: 0.9; line-height: 1.6; }
+
+        /* Contact */
+        .contact { background: var(--bg-light); text-align: center; }
+        .contact-content { max-width: 600px; margin: 0 auto; }
+        .contact-info { display: flex; flex-direction: column; gap: 1.5rem; margin-top: 2rem; }
+        .contact-item { background: var(--white); padding: 1.5rem; border-radius: 12px; box-shadow: var(--shadow); display: flex; align-items: center; justify-content: center; gap: 1rem; font-size: 1.1rem; transition: transform 0.3s; text-decoration: none; color: var(--text-dark); cursor: pointer; }
+        .contact-item:hover { transform: scale(1.02); box-shadow: var(--shadow-lg); }
+        .contact-icon { font-size: 1.5rem; color: var(--accent); }
+
+        /* Footer */
+        footer { background: var(--primary); color: var(--white); text-align: center; padding: 3rem 2rem; font-size: 0.9rem; }
+        .footer-content { max-width: 800px; margin: 0 auto; }
+        .footer-logo { width: 80px; height: auto; margin-bottom: 1rem; filter: brightness(0) invert(1); }
+        .footer-brand { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--accent); }
+        .footer-tagline { font-size: 1.1rem; margin-bottom: 1.5rem; opacity: 0.9; }
+        .footer-link { color: var(--accent); text-decoration: none; font-weight: 600; }
+        .footer-link:hover { opacity: 0.8; text-decoration: underline; }
+        .footer-bottom { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.7; font-size: 0.85rem; }
+
+        /* Mobile */
+        @media (max-width: 968px) {
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: rgba(255, 255, 255, 0.98); flex-direction: column; padding: 1rem; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+            .nav-links.active { display: flex; }
+            .nav-links li { width: 100%; text-align: center; }
+            .nav-links a { display: block; padding: 1rem; border-bottom: 1px solid var(--bg-light); }
+            .mobile-menu { display: flex; }
+            .hero { padding-top: 160px; min-height: auto; padding-bottom: 60px; }
+            .hero-logo { width: 100px; }
+            .hero h1 { font-size: 2.5rem; }
+            .about-content { grid-template-columns: 1fr; }
+            .features-grid { grid-template-columns: 1fr; }
+            .lang-switcher { top: 10px; right: 10px; padding: 3px; }
+            .lang-btn { padding: 6px 12px; font-size: 0.8rem; }
+            nav { margin-top: 60px; padding: 0.5rem 5%; }
+            .logo-img { height: 40px; }
+            .logo-text { font-size: 1.5rem; }
+            .stats { gap: 2rem; }
+            .stat-number { font-size: 2.5rem; }
+            .services-grid { grid-template-columns: 1fr; }
+            .process-grid { grid-template-columns: 1fr; }
+            .why-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2rem; }
+            .hero .subtitle { font-size: 1.2rem; }
+            .hero .tagline { font-size: 1rem; }
+            .hero-logo { width: 80px; }
+            .stats { gap: 1.5rem; }
+            .stat-number { font-size: 2rem; }
+            h2 { font-size: 1.8rem; }
+            .contact-item { font-size: 1rem; padding: 1.2rem; }
+            section { padding: 60px 5%; }
+            .cta-button { padding: 0.9rem 2rem; font-size: 1rem; }
+            .logo-text { display: none; }
+        }
+
+        html { scroll-behavior: smooth; }
+        .lang-content { display: none; }
+        .lang-content.active { display: block; }
+        .mobile-menu.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .mobile-menu.active span:nth-child(2) { opacity: 0; }
+        .mobile-menu.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -6px); }
+    </style>
+</head>
+<body>
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="changeLanguage('pt')">🇵🇹 PT</button>
+        <button class="lang-btn" onclick="changeLanguage('en')">🇬🇧 EN</button>
+        <button class="lang-btn" onclick="changeLanguage('zh')">🇨🇳 中文</button>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">
+            <img src="cinsei_logo.png" alt="CINSEI Logo" class="logo-img">
+            <span class="logo-text">CINSEI</span>
+        </a>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#inicio" data-key="nav_home">Início</a></li>
+            <li><a href="#sobre" data-key="nav_about">Sobre</a></li>
+            <li><a href="#servicos" data-key="nav_services">Serviços</a></li>
+            <li><a href="#processo" data-key="nav_process">Processo</a></li>
+            <li><a href="solicitar-servicos.html">📋 <span class="lang-pt">Solicitar</span><span class="lang-en" style="display:none;">Request</span><span class="lang-zh" style="display:none;">申请</span></a></li><li><a href="#contacto" data-key="nav_contact">Contacto</a></li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenu">
+            <span></span><span></span><span></span>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="lang-content active" id="content-pt">
+            <img src="cinsei_logo.png" alt="CINSEI" class="hero-logo">
+            <h1>CINSEI</h1>
+            <p class="subtitle">Consultoria em Investimento e Serviços, E.I.</p>
+            <p class="tagline">Constituímos a sua empresa em Moçambique<br>Do registo ao acompanhamento anual</p>
+            <a href="solicitar-servicos.html" class="cta-button" style="margin-right: 1rem;">📋 Solicitar Serviços</a><a href="#contacto" class="cta-button" style="background: transparent; border: 2px solid var(--accent);">📧 Contactar</a>
+            <div class="stats">
+                <div class="stat-item"><span class="stat-number">10+</span><span class="stat-label">Anos de Experiência</span></div>
+                <div class="stat-item"><span class="stat-number">20+</span><span class="stat-label">Empresas Constituídas</span></div>
+                <div class="stat-item"><span class="stat-number">1</span><span class="stat-label">Ano Acompanhamento</span></div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="content-en">
+            <img src="cinsei_logo.png" alt="CINSEI" class="hero-logo">
+            <h1>CINSEI</h1>
+            <p class="subtitle">Investment Consulting and Services, Lda.</p>
+            <p class="tagline">We incorporate your company in Mozambique<br>From registration to annual follow-up</p>
+            <a href="#contacto" class="cta-button">Request Proposal</a>
+            <div class="stats">
+                <div class="stat-item"><span class="stat-number">10+</span><span class="stat-label">Years of Experience</span></div>
+                <div class="stat-item"><span class="stat-number">20+</span><span class="stat-label">Companies Incorporated</span></div>
+                <div class="stat-item"><span class="stat-number">1</span><span class="stat-label">Year Follow-up</span></div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="content-zh">
+            <img src="cinsei_logo.png" alt="CINSEI" class="hero-logo">
+            <h1>CINSEI</h1>
+            <p class="subtitle">投资咨询服务公司</p>
+            <p class="tagline">我们在莫桑比克为您注册公司<br>从注册到年度跟进服务</p>
+            <a href="#contacto" class="cta-button">申请方案</a>
+            <div class="stats">
+                <div class="stat-item"><span class="stat-number">10+</span><span class="stat-label">年经验</span></div>
+                <div class="stat-item"><span class="stat-number">20+</span><span class="stat-label">注册公司</span></div>
+                <div class="stat-item"><span class="stat-number">1</span><span class="stat-label">年跟进服务</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="sobre">
+        <div class="lang-content active" id="about-pt">
+            <h2>O Seu Parceiro de Confiança</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>A <strong>CINSEI</strong> é uma empresa de <strong>consultoria em investimento</strong> especializada em serviços empresariais, com vasta experiência no mercado moçambicano. Os nossos consultores possuem <strong>mais de 10 anos de experiência</strong> na área de constituição e gestão empresarial.</p>
+                    <br><p>Compreendemos os desafios do ambiente de negócios em Moçambique e trabalhamos para eliminar a burocracia, permitindo que se concentre no crescimento do seu negócio.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item"><span class="feature-icon">⚡</span><div><strong>Agilidade</strong><p>Processos otimizados que reduzem prazos burocráticos</p></div></div>
+                    <div class="feature-item"><span class="feature-icon">🤝</span><div><strong>Transparência</strong><p>Comunicação clara em todas as etapas do processo</p></div></div>
+                    <div class="feature-item"><span class="feature-icon">🛡️</span><div><strong>Segurança</strong><p>Cumprimento rigoroso de toda a legislação vigente</p></div></div>
+                    <div class="feature-item"><span class="feature-icon">💡</span><div><strong>Experiência</strong><p>Mais de 10 anos de experiência no mercado moçambicano</p></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="about-en">
+            <h2>Your Trusted Partner</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p><strong>CINSEI</strong> is an <strong>investment consulting</strong> company specialized in business services, with extensive experience in the Mozambican market. Our consultants have <strong>more than 10 years of experience</strong> in company incorporation and management.</p>
+                    <br><p>We understand the challenges of the business environment in Mozambique and work to eliminate bureaucracy, allowing you to focus on growing your business.</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item"><span class="feature-icon">⚡</span><div><strong>Agility</strong><p>Optimized processes that reduce bureaucratic deadlines</p></div></div>
+                    <div class="feature-item"><span class="feature-icon">🤝</span><div><strong>Transparency</strong><p>Clear communication at all stages of the process</p></div></div>
+                    <div class="feature-item"><span class="feature-icon">🛡️</span><div><strong>Security</strong><p>Strict compliance with all current legislation</p></div></div>
+                    <div class="feature-item"><span class="feature-icon">💡</span><div><strong>Experience</strong><p>More than 10 years of experience in the Mozambican market</p></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="about-zh">
+            <h2>您可信赖的合作伙伴</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p><strong>CINSEI</strong>是一家专业的<strong>投资咨询</strong>公司，专注于商业服务，在莫桑比克市场拥有丰富的经验。我们的顾问在公司注册和管理领域拥有<strong>超过10年的经验</strong>。</p>
+                    <br><p>我们了解莫桑比克商业环境的挑战，致力于消除官僚障碍，让您能够专注于业务增长。</p>
+                </div>
+                <div class="features-grid">
+                    <div class="feature-item"><span class="feature-icon">⚡</span><div><strong>高效快捷</strong><p>优化流程，缩短官僚程序时间</p></div></div>
+                    <div class="feature-item"><span class="feature-icon">🤝</span><div><strong>透明公开</strong><p>流程各阶段清晰沟通</p></div></div>
+                    <div class="feature-item"><span class="feature-icon">🛡️</span><div><strong>安全可靠</strong><p>严格遵守所有现行法律法规</p></div></div>
+                    <div class="feature-item"><span class="feature-icon">💡</span><div><strong>丰富经验</strong><p>在莫桑比克市场拥有超过10年经验</p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Process Section -->
+    <section class="process" id="processo">
+        <div class="lang-content active" id="process-pt">
+            <h2>Processo de Constituição</h2>
+            <div class="process-grid">
+                <div class="process-card"><span class="process-number">01</span><h3>Reserva de Nome</h3><p>Verificação de disponibilidade e reserva da denominação social na Conservatória do Registo Comercial de Moçambique.</p></div>
+                <div class="process-card"><span class="process-number">02</span><h3>Elaboração de Estatutos</h3><p>Redação do contrato social conforme modelo legal moçambicano, definindo objeto social, capital, sede e estrutura societária.</p></div>
+                <div class="process-card"><span class="process-number">03</span><h3>Abertura de Conta Bancária</h3><p>Intermediação com bancos comerciais para abertura de conta provisória em nome da empresa e depósito do capital social mínimo.</p></div>
+                <div class="process-card"><span class="process-number">04</span><h3>Certidão Definitiva</h3><p>Obtenção da certidão de registo comercial definitiva, conferindo personalidade jurídica e capacidade legal à empresa.</p></div>
+                <div class="process-card"><span class="process-number">05</span><h3>Registo Fiscal (NUIT)</h3><p>Inscrição na Autoridade Tributária de Moçambique e obtenção do Número Único de Identificação Tributária (NUIT).</p></div>
+                <div class="process-card"><span class="process-number">06</span><h3>Publicação no Boletim da República</h3><p>Tramitação e publicação do extrato de constituição no Boletim da República para efeitos de terceiros.</p></div>
+                <div class="process-card"><span class="process-number">07</span><h3>Emissão do Alvará</h3><p>Requerimento e obtenção do alvará de funcionamento/licença comercial junto dos órgãos municipais competentes.</p></div>
+                <div class="process-card"><span class="process-number">08</span><h3>Início de Atividade</h3><p>Comunicação de início de atividade à Autoridade Tributária e regularização do regime fiscal aplicável.</p></div>
+                <div class="process-card"><span class="process-number">09</span><h3>Registo no INSS</h3><p>Cadastro da empresa no Instituto Nacional de Segurança Social para cumprimento das obrigações previdenciais laborais.</p></div>
+                <div class="process-card" style="border-left-color: var(--accent); background: linear-gradient(135deg, #fff9e6, #ffffff);"><span class="process-number">10</span><h3>🌟 Acompanhamento por 1 Ano</h3><p><strong>Exclusivo CINSEI:</strong> Suporte contínuo nas obrigações legais, acompanhamento de prazos fiscais, consultoria pontual e resolução de questões emergentes durante o primeiro ano de atividade.</p></div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="process-en">
+            <h2>Incorporation Process</h2>
+            <div class="process-grid">
+                <div class="process-card"><span class="process-number">01</span><h3>Name Reservation</h3><p>Verification of availability and reservation of the company name at the Commercial Registry Office of Mozambique.</p></div>
+                <div class="process-card"><span class="process-number">02</span><h3>Articles of Association</h3><p>Drafting of the articles of association according to Mozambican legal model, defining corporate purpose, capital, headquarters and corporate structure.</p></div>
+                <div class="process-card"><span class="process-number">03</span><h3>Bank Account Opening</h3><p>Intermediation with commercial banks for opening a provisional account in the company's name and deposit of minimum share capital.</p></div>
+                <div class="process-card"><span class="process-number">04</span><h3>Definitive Certificate</h3><p>Obtaining the definitive commercial registration certificate, conferring legal personality and capacity to the company.</p></div>
+                <div class="process-card"><span class="process-number">05</span><h3>Tax Registration (NUIT)</h3><p>Registration with the Mozambique Tax Authority and obtaining the Single Tax Identification Number (NUIT).</p></div>
+                <div class="process-card"><span class="process-number">06</span><h3>Publication in Official Gazette</h3><p>Processing and publication of the incorporation extract in the Official Gazette for third-party effects.</p></div>
+                <div class="process-card"><span class="process-number">07</span><h3>Operating License</h3><p>Request and obtain the operating license/commercial permit from the competent municipal authorities.</p></div>
+                <div class="process-card"><span class="process-number">08</span><h3>Activity Start</h3><p>Communication of activity start to the Tax Authority and regularization of the applicable tax regime.</p></div>
+                <div class="process-card"><span class="process-number">09</span><h3>INSS Registration</h3><p>Company registration with the National Social Security Institute for compliance with labor social security obligations.</p></div>
+                <div class="process-card" style="border-left-color: var(--accent); background: linear-gradient(135deg, #fff9e6, #ffffff);"><span class="process-number">10</span><h3>🌟 1 Year Follow-up</h3><p><strong>Exclusive CINSEI:</strong> Continuous support in legal obligations, tax deadline monitoring, on-demand consulting and resolution of emerging issues during the first year of activity.</p></div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="process-zh">
+            <h2>公司注册流程</h2>
+            <div class="process-grid">
+                <div class="process-card"><span class="process-number">01</span><h3>名称预留</h3><p>在莫桑比克商业登记处核查并预留公司名称。</p></div>
+                <div class="process-card"><span class="process-number">02</span><h3>公司章程制定</h3><p>根据莫桑比克法律模式起草公司章程，明确经营范围、注册资本、总部地址和公司结构。</p></div>
+                <div class="process-card"><span class="process-number">03</span><h3>银行账户开设</h3><p>协助与商业银行接洽，开设公司临时账户并存入最低注册资本。</p></div>
+                <div class="process-card"><span class="process-number">04</span><h3>最终注册证书</h3><p>获取最终商业注册证书，赋予公司法人资格和法律行为能力。</p></div>
+                <div class="process-card"><span class="process-number">05</span><h3>税务登记（NUIT）</h3><p>在莫桑比克税务局注册并获取唯一税务识别号（NUIT）。</p></div>
+                <div class="process-card"><span class="process-number">06</span><h3>政府公报公示</h3><p>处理并在政府公报上公示公司成立摘要，以产生第三方效力。</p></div>
+                <div class="process-card"><span class="process-number">07</span><h3>营业执照颁发</h3><p>向相关市政部门申请并获得营业执照/商业许可证。</p></div>
+                <div class="process-card"><span class="process-number">08</span><h3>开始营业</h3><p>向税务局报告开始营业，并确定适用的税务制度。</p></div>
+                <div class="process-card"><span class="process-number">09</span><h3>社会保障注册</h3><p>在国家社会保障 institute 注册公司，履行劳动社保义务。</p></div>
+                <div class="process-card" style="border-left-color: var(--accent); background: linear-gradient(135deg, #fff9e6, #ffffff);"><span class="process-number">10</span><h3>🌟 一年跟进服务</h3><p><strong>CINSEI独家服务：</strong>在首年运营期间提供持续的法律义务支持、税务期限监控、按需咨询和突发问题解决服务。</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="servicos">
+        <div class="lang-content active" id="services-pt">
+            <h2>Serviços de Consultoria em Investimento</h2>
+            <div class="services-grid">
+                <div class="service-card"><span class="service-icon">💼</span><h3>Consultoria de Investimento</h3><p>Análise de viabilidade, estudos de mercado e estratégias de entrada em Moçambique para investidores nacionais e estrangeiros.</p></div>
+                <div class="service-card"><span class="service-icon">📋</span><h3>Licenciamento Especializado</h3><p>Obtenção de licenças sectoriais específicas para saúde, construção, turismo, mineração e outros sectores regulados.</p></div>
+                <div class="service-card"><span class="service-icon">🏭</span><h3>Apoio a Conteúdo Local</h3><p>Consultoria para cumprimento de requisitos de conteúdo local em projetos de grande investimento e indústrias extractivas.</p></div>
+                <div class="service-card"><span class="service-icon">🌍</span><h3>Investidores Estrangeiros</h3><p>Apoio em vistos de investidor, autorizações de trabalho, regularização migratória e adaptação ao quadro legal moçambicano.</p></div>
+                <div class="service-card"><span class="service-icon">🔍</span><h3>Due Diligence</h3><p>Auditoria legal e fiscal de empresas em processos de aquisição, fusão ou parcerias estratégicas.</p></div>
+                <div class="service-card"><span class="service-icon">📊</span><h3>Estudos de Mercado</h3><p>Pesquisa e análise de mercado para sectores específicos, identificação de oportunidades e avaliação da concorrência.</p></div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="services-en">
+            <h2>Investment Consulting Services</h2>
+            <div class="services-grid">
+                <div class="service-card"><span class="service-icon">💼</span><h3>Investment Consulting</h3><p>Feasibility analysis, market studies and entry strategies in Mozambique for national and foreign investors.</p></div>
+                <div class="service-card"><span class="service-icon">📋</span><h3>Specialized Licensing</h3><p>Obtaining specific sectoral licenses for health, construction, tourism, mining and other regulated sectors.</p></div>
+                <div class="service-card"><span class="service-icon">🏭</span><h3>Local Content Support</h3><p>Consulting for compliance with local content requirements in major investment projects and extractive industries.</p></div>
+                <div class="service-card"><span class="service-icon">🌍</span><h3>Foreign Investors</h3><p>Support with investor visas, work permits, immigration regularization and adaptation to Mozambican legal framework.</p></div>
+                <div class="service-card"><span class="service-icon">🔍</span><h3>Due Diligence</h3><p>Legal and tax audit of companies in acquisition, merger or strategic partnership processes.</p></div>
+                <div class="service-card"><span class="service-icon">📊</span><h3>Market Studies</h3><p>Market research and analysis for specific sectors, opportunity identification and competition assessment.</p></div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="services-zh">
+            <h2>投资咨询服务</h2>
+            <div class="services-grid">
+                <div class="service-card"><span class="service-icon">💼</span><h3>投资咨询</h3><p>为国内外投资者提供可行性分析、市场调研和莫桑比克市场进入策略。</p></div>
+                <div class="service-card"><span class="service-icon">📋</span><h3>专业许可办理</h3><p>为医疗、建筑、旅游、采矿等受监管行业获取特定行业许可证。</p></div>
+                <div class="service-card"><span class="service-icon">🏭</span><h3>本地内容支持</h3><p>为大型投资项目和采掘业提供本地内容要求合规咨询服务。</p></div>
+                <div class="service-card"><span class="service-icon">🌍</span><h3>外国投资者服务</h3><p>协助办理投资者签证、工作许可、移民身份合法化及适应莫桑比克法律框架。</p></div>
+                <div class="service-card"><span class="service-icon">🔍</span><h3>尽职调查</h3><p>为收购、合并或战略 partnership 流程中的公司提供法律和税务审计。</p></div>
+                <div class="service-card"><span class="service-icon">📊</span><h3>市场研究</h3><p>针对特定行业的市场研究和分析，识别机会并评估竞争态势。</p></div>
+            </div>
+        </div>
+    </section>
+    <!-- Why Choose Us -->
+    <section class="why-us">
+        <div class="lang-content active" id="why-pt">
+            <h2>Por que escolher a CINSEI?</h2>
+            <div class="why-grid">
+                <div class="why-item"><span class="why-icon">⚡</span><h3>Processo integrado e ágil</h3><p>Sistemas otimizados que garantem rapidez sem comprometer a qualidade</p></div>
+                <div class="why-item"><span class="why-icon">👥</span><h3>Consultores experientes</h3><p>Mais de 10 anos de experiência prática em consultoria de investimento em Moçambique</p></div>
+                <div class="why-item"><span class="why-icon">💎</span><h3>Transparência total</h3><p>Comunicação clara e honesta em todas as etapas do processo</p></div>
+                <div class="why-item"><span class="why-icon">🤲</span><h3>Suporte personalizado</h3><p>Acompanhamento dedicado durante 1 ano após a constituição</p></div>
+                <div class="why-item"><span class="why-icon">💰</span><h3>Preços competitivos</h3><p>Valores justos e transparentes, sem custos ocultos ou surpresas</p></div>
+                <div class="why-item"><span class="why-icon">📚</span><h3>Conhecimento profundo</h3><p>Dominância completa da legislação moçambicana e práticas de investimento</p></div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="why-en">
+            <h2>Why Choose CINSEI?</h2>
+            <div class="why-grid">
+                <div class="why-item"><span class="why-icon">⚡</span><h3>Integrated and Agile Process</h3><p>Optimized systems that ensure speed without compromising quality</p></div>
+                <div class="why-item"><span class="why-icon">👥</span><h3>Experienced Consultants</h3><p>More than 10 years of practical investment consulting experience in Mozambique</p></div>
+                <div class="why-item"><span class="why-icon">💎</span><h3>Total Transparency</h3><p>Clear and honest communication at all stages of the process</p></div>
+                <div class="why-item"><span class="why-icon">🤲</span><h3>Personalized Support</h3><p>Dedicated follow-up for 1 year after incorporation</p></div>
+                <div class="why-item"><span class="why-icon">💰</span><h3>Competitive Prices</h3><p>Fair and transparent values, with no hidden costs or surprises</p></div>
+                <div class="why-item"><span class="why-icon">📚</span><h3>Deep Knowledge</h3><p>Complete mastery of Mozambican legislation and investment practices</p></div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="why-zh">
+            <h2>为什么选择CINSEI？</h2>
+            <div class="why-grid">
+                <div class="why-item"><span class="why-icon">⚡</span><h3>一体化高效流程</h3><p>优化的系统确保快速高效，同时不妥协质量</p></div>
+                <div class="why-item"><span class="why-icon">👥</span><h3>经验丰富的顾问</h3><p>在莫桑比克投资咨询领域拥有超过10年的实践经验</p></div>
+                <div class="why-item"><span class="why-icon">💎</span><h3>完全透明</h3><p>在流程的各个阶段保持清晰诚实的沟通</p></div>
+                <div class="why-item"><span class="why-icon">🤲</span><h3>个性化支持</h3><p>注册后提供为期1年的专属跟进服务</p></div>
+                <div class="why-item"><span class="why-icon">💰</span><h3>具有竞争力的价格</h3><p>公平透明的定价，无隐藏费用或意外收费</p></div>
+                <div class="why-item"><span class="why-icon">📚</span><h3>深厚的专业知识</h3><p>精通莫桑比克法律法规和投资实践</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="lang-content active" id="contact-pt">
+            <h2>Entre em Contacto</h2>
+            <div class="contact-content">
+                <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem;">Pronto para iniciar o seu investimento em Moçambique? Fale connosco e solicite uma proposta personalizada.</p>
+                <div class="contact-info">
+                    <a href="mailto:cinseiconsultorias25@gmail.com" class="contact-item"><span class="contact-icon">📧</span><span>cinseiconsultorias25@gmail.com</span></a>
+                    <a href="tel:+258827743075" class="contact-item"><span class="contact-icon">📱</span><span>+258 82 774 3075</span></a>
+                    <div class="contact-item"><span class="contact-icon">📍</span><span>Maputo, Moçambique</span></div>
+                </div>
+                <a href="mailto:cinseiconsultorias25@gmail.com" class="cta-button" style="margin-top: 2rem; display: inline-block;">Enviar Email</a>
+            </div>
+        </div>
+
+        <div class="lang-content" id="contact-en">
+            <h2>Get in Touch</h2>
+            <div class="contact-content">
+                <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem;">Ready to start your investment in Mozambique? Contact us and request a personalized proposal.</p>
+                <div class="contact-info">
+                    <a href="mailto:cinseiconsultorias25@gmail.com" class="contact-item"><span class="contact-icon">📧</span><span>cinseiconsultorias25@gmail.com</span></a>
+                    <a href="tel:+258827743075" class="contact-item"><span class="contact-icon">📱</span><span>+258 82 774 3075</span></a>
+                    <div class="contact-item"><span class="contact-icon">📍</span><span>Maputo, Mozambique</span></div>
+                </div>
+                <a href="mailto:cinseiconsultorias25@gmail.com" class="cta-button" style="margin-top: 2rem; display: inline-block;">Send Email</a>
+            </div>
+        </div>
+
+        <div class="lang-content" id="contact-zh">
+            <h2>联系我们</h2>
+            <div class="contact-content">
+                <p style="font-size: 1.2rem; color: var(--text-light); margin-bottom: 2rem;">准备在莫桑比克投资？请联系我们，获取个性化方案。</p>
+                <div class="contact-info">
+                    <a href="mailto:cinseiconsultorias25@gmail.com" class="contact-item"><span class="contact-icon">📧</span><span>cinseiconsultorias25@gmail.com</span></a>
+                    <a href="tel:+258827743075" class="contact-item"><span class="contact-icon">📱</span><span>+258 82 774 3075</span></a>
+                    <div class="contact-item"><span class="contact-icon">📍</span><span>马普托，莫桑比克</span></div>
+                </div>
+                <a href="mailto:cinseiconsultorias25@gmail.com" class="cta-button" style="margin-top: 2rem; display: inline-block;">发送邮件</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="lang-content active" id="footer-pt">
+            <div class="footer-content">
+                <img src="cinsei_logo.png" alt="CINSEI" class="footer-logo">
+                <div class="footer-brand">CINSEI</div>
+                <div class="footer-tagline">Consultoria em Investimento e Serviços, E.I.</div>
+                <p><a href="mailto:cinseiconsultorias25@gmail.com" class="footer-link">cinseiconsultorias25@gmail.com</a> | <a href="tel:+258827743075" class="footer-link">+258 82 774 3075</a></p>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 CINSEI - Consultoria em Investimento e Serviços, E.I.</p>
+                    <p>Todos os direitos reservados. Especialistas em investimento em Moçambique.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="footer-en">
+            <div class="footer-content">
+                <img src="cinsei_logo.png" alt="CINSEI" class="footer-logo">
+                <div class="footer-brand">CINSEI</div>
+                <div class="footer-tagline">Investment Consulting and Services, Lda.</div>
+                <p><a href="mailto:cinseiconsultorias25@gmail.com" class="footer-link">cinseiconsultorias25@gmail.com</a> | <a href="tel:+258827743075" class="footer-link">+258 82 774 3075</a></p>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 CINSEI - Investment Consulting and Services, Lda.</p>
+                    <p>All rights reserved. Investment specialists in Mozambique.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="lang-content" id="footer-zh">
+            <div class="footer-content">
+                <img src="cinsei_logo.png" alt="CINSEI" class="footer-logo">
+                <div class="footer-brand">CINSEI</div>
+                <div class="footer-tagline">投资咨询服务公司</div>
+                <p><a href="mailto:cinseiconsultorias25@gmail.com" class="footer-link">cinseiconsultorias25@gmail.com</a> | <a href="tel:+258827743075" class="footer-link">+258 82 774 3075</a></p>
+                <div class="footer-bottom">
+                    <p>&copy; 2024 CINSEI - 投资咨询服务公司</p>
+                    <p>保留所有权利。莫桑比克投资专家。</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function changeLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.lang-btn').classList.add('active');
+            document.querySelectorAll('.lang-content').forEach(content => content.classList.remove('active'));
+            document.querySelectorAll('[id$="-' + lang + '"]').forEach(el => el.classList.add('active'));
+
+            var navTexts = {
+                pt: { nav_home: 'Início', nav_about: 'Sobre', nav_services: 'Serviços', nav_process: 'Processo', nav_contact: 'Contacto' },
+                en: { nav_home: 'Home', nav_about: 'About', nav_services: 'Services', nav_process: 'Process', nav_contact: 'Contact' },
+                zh: { nav_home: '首页', nav_about: '关于', nav_services: '服务', nav_process: '流程', nav_contact: '联系' }
+            };
+
+            Object.keys(navTexts[lang]).forEach(function(key) {
+                document.querySelectorAll('[data-key="' + key + '"]').forEach(function(el) { el.textContent = navTexts[lang][key]; });
+            });
+
+            document.documentElement.lang = lang === 'zh' ? 'zh-CN' : lang;
+            localStorage.setItem('preferred-language', lang);
+            document.getElementById('navLinks').classList.remove('active');
+            document.getElementById('mobileMenu').classList.remove('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var savedLang = localStorage.getItem('preferred-language') || 'pt';
+            if (savedLang !== 'pt') {
+                var buttons = document.querySelectorAll('.lang-btn');
+                var langMap = { 'pt': 0, 'en': 1, 'zh': 2 };
+                if (buttons[langMap[savedLang]]) buttons[langMap[savedLang]].click();
+            }
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                var target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.getElementById('navLinks').classList.remove('active');
+                    document.getElementById('mobileMenu').classList.remove('active');
+                }
+            });
+        });
+
+        var mobileMenu = document.getElementById('mobileMenu');
+        var navLinks = document.getElementById('navLinks');
+
+        mobileMenu.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        var lastScroll = 0;
+        window.addEventListener('scroll', function() {
+            var nav = document.querySelector('nav');
+            var currentScroll = window.pageYOffset;
+            if (currentScroll > 50) {
+                nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.15)';
+                nav.style.padding = '0.5rem 5%';
+            } else {
+                nav.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                nav.style.padding = '1rem 5%';
+            }
+            lastScroll = currentScroll;
+        });
+
+        document.querySelectorAll('.contact-item, .cta-button, .lang-btn').forEach(function(el) {
+            el.addEventListener('touchstart', function() { this.style.transform = 'scale(0.98)'; });
+            el.addEventListener('touchend', function() { this.style.transform = ''; });
+        });
+    </script>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/258827743075?text=Olá!%20Gostaria%20de%20solicitar%20informações%20sobre%20os%20serviços%20da%20CINSEI." 
+       class="whatsapp-float" 
+       target="_blank"
+       title="Fale connosco no WhatsApp"
+       style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background: #25d366; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; text-decoration: none; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); z-index: 1000; animation: pulse 2s infinite;">
+        💬
+    </a>
+    <style>
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); }
+            50% { box-shadow: 0 4px 30px rgba(37, 211, 102, 0.7); }
+        }
+        .whatsapp-float:hover { transform: scale(1.1); }
+        @media (max-width: 768px) {
+            .whatsapp-float { width: 50px; height: 50px; font-size: 1.5rem; bottom: 20px; right: 20px; }
+        }
+    </style>
+</body>
+</html>
